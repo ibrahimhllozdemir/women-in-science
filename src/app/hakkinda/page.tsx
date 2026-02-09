@@ -28,8 +28,8 @@ export default function AboutPage() {
                     className="relative z-10 text-center max-w-4xl px-6"
                 >
                     <motion.h1
-                        className="text-6xl md:text-8xl font-serif font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400"
-                        style={{ lineHeight: '1.2' }}
+                        className="text-6xl md:text-8xl font-serif font-bold mb-6 pb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 overflow-visible"
+                        style={{ lineHeight: '1.3' }}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}

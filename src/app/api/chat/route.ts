@@ -4,6 +4,18 @@ import { google } from '@ai-sdk/google';
 
 export const runtime = 'edge';
 
+// Handle CORS preflight requests
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, X-Scientist-Name',
+        },
+    });
+}
+
 export async function POST(req: Request) {
     console.log("Chat API Request Received");
     try {
@@ -49,7 +61,9 @@ export async function POST(req: Request) {
         });
 
         console.log("Returning text stream response");
-        return result.toTextStreamResponse();
+        const response = result.toTextStreamResponse();
+        response.headers.set('Access-Control-Allow-Origin', '*');
+        return response;
     } catch (error) {
         console.error("AI Error in route:", error);
         return new Response("Yapay zeka yanıt veremedi: " + (error as Error).message, { status: 500 });

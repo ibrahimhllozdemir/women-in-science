@@ -81,7 +81,7 @@ export default function LandingHero() {
                     </Link>
                     <Link
                         href="/hakkinda"
-                        className="inline-flex items-center justify-center px-8 py-3 font-bold uppercase tracking-widest text-white bg-purple-500/20 border border-purple-400/50 rounded-full hover:bg-purple-500/30 hover:border-purple-400 transition-all duration-300 shadow-lg shadow-purple-500/20"
+                        className="inline-flex items-center justify-center px-10 py-4 font-bold uppercase tracking-widest text-black bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 shadow-xl shadow-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/70 hover:scale-105 text-base md:text-lg"
                     >
                         Hakkında
                     </Link>
