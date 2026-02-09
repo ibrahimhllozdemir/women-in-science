@@ -108,10 +108,11 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0, opacity: 0 }}
                         onClick={() => setIsOpen(true)}
-                        className="fixed bottom-8 right-8 z-50 flex items-center gap-2 px-6 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full shadow-lg shadow-amber-500/20 transition-all active:scale-95 group"
+                        className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex items-center gap-2 px-4 py-3 md:px-6 md:py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full shadow-lg shadow-amber-500/20 transition-all active:scale-95 group text-sm md:text-base"
                     >
-                        <MessageCircle className="w-6 h-6 group-hover:animate-bounce" />
-                        <span>{scientistName} ile Sohbet Et</span>
+                        <MessageCircle className="w-5 h-5 md:w-6 md:h-6 group-hover:animate-bounce" />
+                        <span className="hidden sm:inline">{scientistName} ile Sohbet Et</span>
+                        <span className="sm:hidden">Sohbet</span>
                     </motion.button>
                 )}
             </AnimatePresence>
@@ -122,15 +123,19 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         initial={{ opacity: 0, y: 100, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 100, scale: 0.9 }}
-                        className="fixed bottom-8 right-8 w-full max-w-sm h-[500px] bg-neutral-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col backdrop-blur-xl bg-opacity-95"
+                        className="fixed inset-0 md:inset-auto md:bottom-8 md:right-8 w-full md:w-full md:max-w-md h-full md:h-[600px] bg-neutral-900 md:border md:border-white/10 md:rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col backdrop-blur-xl bg-opacity-95"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-4 bg-black/40 border-b border-white/10">
+                        <div className="flex items-center justify-between p-4 md:p-4 bg-black/40 border-b border-white/10">
                             <div className="flex items-center gap-2">
                                 <Sparkles className="w-5 h-5 text-amber-500" />
-                                <h3 className="font-bold text-white max-w-[200px] truncate">{scientistName} (AI)</h3>
+                                <h3 className="font-bold text-white text-sm md:text-base max-w-[200px] md:max-w-[250px] truncate">{scientistName} (AI)</h3>
                             </div>
-                            <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-colors">
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                className="p-2 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-colors"
+                                aria-label="Kapat"
+                            >
                                 <X size={20} />
                             </button>
                         </div>
@@ -138,7 +143,7 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         {/* Chat Area */}
                         <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
                             {messages.length === 0 && (
-                                <div className="text-center text-gray-500 text-sm mt-10">
+                                <div className="text-center text-gray-500 text-sm mt-10 px-4">
                                     <p>Merhaba! Benim adım {scientistName}.</p>
                                     <p className="mt-2">Bana hayatım, çalışmalarım veya bilim hakkında soru sorabilirsin.</p>
                                 </div>
@@ -147,7 +152,7 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                             {messages.map((m) => (
                                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div
-                                        className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed prose prose-sm prose-invert max-w-none ${m.role === 'user'
+                                        className={`max-w-[85%] md:max-w-[80%] rounded-2xl px-3 py-2 md:px-4 md:py-2.5 text-sm leading-relaxed prose prose-sm prose-invert max-w-none ${m.role === 'user'
                                             ? 'bg-amber-500 text-black rounded-tr-none prose-p:text-black prose-headings:text-black prose-strong:text-black'
                                             : 'bg-white/10 text-gray-200 rounded-tl-none'
                                             }`}
@@ -182,18 +187,19 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         </div>
 
                         {/* Input Area */}
-                        <form onSubmit={handleSubmit} className="p-4 border-t border-white/10 bg-black/20">
+                        <form onSubmit={handleSubmit} className="p-3 md:p-4 border-t border-white/10 bg-black/20">
                             <div className="relative flex items-center">
                                 <input
                                     value={input}
                                     onChange={handleInputChange}
                                     placeholder="Bir soru sor..."
-                                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-amber-500 placeholder:text-gray-500 pr-10 hover:bg-white/10 transition-colors"
+                                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 md:py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-amber-500 placeholder:text-gray-500 pr-12 hover:bg-white/10 transition-colors"
                                 />
                                 <button
                                     type="submit"
                                     disabled={isLoading || !input.trim()}
-                                    className="absolute right-2 p-2 bg-amber-500 hover:bg-amber-400 text-black rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="absolute right-2 p-2.5 md:p-2 bg-amber-500 hover:bg-amber-400 text-black rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    aria-label="Gönder"
                                 >
                                     <Send size={16} />
                                 </button>

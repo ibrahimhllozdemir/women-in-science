@@ -8,12 +8,12 @@ export default function AboutPage() {
     return (
         <main className="min-h-screen bg-black text-white">
             {/* Header */}
-            <header className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
-                <Link href="/" className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors">
-                    <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="uppercase tracking-widest text-sm font-bold">Sergiye Dön</span>
+            <header className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4 md:py-6 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
+                <Link href="/" className="group flex items-center gap-1 md:gap-2 text-white/50 hover:text-white transition-colors">
+                    <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="uppercase tracking-wider md:tracking-widest text-xs md:text-sm font-bold">Sergiye Dön</span>
                 </Link>
-                <span className="text-xs text-white/30 uppercase tracking-[0.2em]">İzmir Fikir Sanat Rotary Kulübü</span>
+                <span className="text-[8px] sm:text-[10px] md:text-xs text-white/30 uppercase tracking-wider md:tracking-[0.2em] hidden sm:inline">İzmir Fikir Sanat Rotary Kulübü</span>
             </header>
 
             {/* Hero Section */}
@@ -25,10 +25,10 @@ export default function AboutPage() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    className="relative z-10 text-center max-w-4xl px-6"
+                    className="relative z-10 text-center max-w-4xl px-4 md:px-6"
                 >
                     <motion.h1
-                        className="text-6xl md:text-8xl font-serif font-bold mb-6 pb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 overflow-visible"
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-serif font-bold mb-4 md:mb-6 pb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 overflow-visible"
                         style={{ lineHeight: '1.3' }}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -37,7 +37,7 @@ export default function AboutPage() {
                         Sergi Hakkında
                     </motion.h1>
                     <motion.p
-                        className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 font-light leading-relaxed px-2"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5, duration: 0.8 }}
