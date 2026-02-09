@@ -21,10 +21,46 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [viewportHeight, setViewportHeight] = useState<number | null>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
+    };
+
+    // Handle iOS keyboard with Visual Viewport API
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const handleViewportResize = () => {
+            if (window.visualViewport) {
+                setViewportHeight(window.visualViewport.height);
+            }
+        };
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', handleViewportResize);
+            handleViewportResize();
+
+            return () => {
+                window.visualViewport?.removeEventListener('resize', handleViewportResize);
+            };
+        }
+    }, []);
+
+    // Auto-scroll when messages change
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    // Scroll input into view when focused
+    const handleInputFocus = () => {
+        setTimeout(() => {
+            inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 300);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -123,7 +159,11 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         initial={{ opacity: 0, y: 100, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 100, scale: 0.9 }}
-                        className="fixed inset-0 md:inset-auto md:bottom-8 md:right-8 w-full md:w-full md:max-w-md h-full md:h-[600px] bg-neutral-900 md:border md:border-white/10 md:rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col backdrop-blur-xl bg-opacity-95"
+                        className="fixed inset-0 md:inset-auto md:bottom-8 md:right-8 w-full md:w-full md:max-w-md bg-neutral-900 md:border md:border-white/10 md:rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col backdrop-blur-xl bg-opacity-95"
+                        style={{
+                            height: viewportHeight ? `${viewportHeight}px` : '100%',
+                            maxHeight: viewportHeight ? `${viewportHeight}px` : '100%',
+                        }}
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between p-4 md:p-4 bg-black/40 border-b border-white/10">
@@ -186,12 +226,13 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                             )}
                         </div>
 
-                        {/* Input Area - Sticky at bottom */}
-                        <form onSubmit={handleSubmit} className="sticky bottom-0 p-3 md:p-4 border-t border-white/10 bg-neutral-900/95 backdrop-blur-sm pb-safe">
+                        <form onSubmit={handleSubmit} className="sticky bottom-0 p-3 md:p-4 border-t border-white/10 bg-neutral-900/95 backdrop-blur-sm">
                             <div className="relative flex items-center">
                                 <input
+                                    ref={inputRef}
                                     value={input}
                                     onChange={handleInputChange}
+                                    onFocus={handleInputFocus}
                                     placeholder="Bir soru sor..."
                                     className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 md:py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder:text-gray-500 pr-12 hover:bg-white/10 transition-colors"
                                     autoComplete="off"
