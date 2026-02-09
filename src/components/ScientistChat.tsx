@@ -141,7 +141,7 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                         </div>
 
                         {/* Chat Area */}
-                        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
+                        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide pb-safe">
                             {messages.length === 0 && (
                                 <div className="text-center text-gray-500 text-sm mt-10 px-4">
                                     <p>Merhaba! Benim adım {scientistName}.</p>
@@ -186,19 +186,20 @@ export default function ScientistChat({ scientistName }: ScientistChatProps) {
                             )}
                         </div>
 
-                        {/* Input Area */}
-                        <form onSubmit={handleSubmit} className="p-3 md:p-4 border-t border-white/10 bg-black/20">
+                        {/* Input Area - Sticky at bottom */}
+                        <form onSubmit={handleSubmit} className="sticky bottom-0 p-3 md:p-4 border-t border-white/10 bg-neutral-900/95 backdrop-blur-sm pb-safe">
                             <div className="relative flex items-center">
                                 <input
                                     value={input}
                                     onChange={handleInputChange}
                                     placeholder="Bir soru sor..."
-                                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 md:py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-amber-500 placeholder:text-gray-500 pr-12 hover:bg-white/10 transition-colors"
+                                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 md:py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder:text-gray-500 pr-12 hover:bg-white/10 transition-colors"
+                                    autoComplete="off"
                                 />
                                 <button
                                     type="submit"
                                     disabled={isLoading || !input.trim()}
-                                    className="absolute right-2 p-2.5 md:p-2 bg-amber-500 hover:bg-amber-400 text-black rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="absolute right-2 p-2.5 md:p-2 bg-amber-500 hover:bg-amber-400 text-black rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
                                     aria-label="Gönder"
                                 >
                                     <Send size={16} />
