@@ -1,3 +1,5 @@
+"use client";
+
 import { notFound } from 'next/navigation';
 import { EXHIBITION_FIELDS } from '@/data/fields';
 import { SCIENTISTS } from '@/data/scientists';
@@ -5,20 +7,14 @@ import Link from 'next/link';
 import { ArrowLeft, Quote, Atom, Share2 } from 'lucide-react';
 import Image from 'next/image';
 import ScientistChat from '@/components/ScientistChat';
+import { use } from 'react';
 
 interface DetailProps {
     params: Promise<{ field: string; scientistId: string }>;
 }
 
-export async function generateStaticParams() {
-    return SCIENTISTS.map((scientist) => ({
-        field: scientist.fieldId,
-        scientistId: scientist.id,
-    }));
-}
-
-export default async function ScientistDetailPage({ params }: DetailProps) {
-    const { field, scientistId } = await params;
+export default function ScientistDetailPage({ params }: DetailProps) {
+    const { field, scientistId } = use(params);
 
     const scientist = SCIENTISTS.find((s) => s.id === scientistId);
     const fieldData = EXHIBITION_FIELDS.find((f) => f.id === field);
@@ -27,6 +23,29 @@ export default async function ScientistDetailPage({ params }: DetailProps) {
 
     // Image placeholder logic
     const imageUrl = scientist.imageUrl || `https://placehold.co/800x1200/151515/FFFFFF/png?text=${encodeURIComponent(scientist.name)}`;
+
+    const handleShare = async () => {
+        const shareData = {
+            title: `${scientist.name} - Bilimde İz Bırakan Kadınlar`,
+            text: `${scientist.name}: ${scientist.contribution}`,
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share) {
+                // Web Share API supported (mobile browsers)
+                await navigator.share(shareData);
+            } else {
+                // Fallback: Copy to clipboard
+                await navigator.clipboard.writeText(window.location.href);
+                alert('Link panoya kopyalandı!');
+            }
+        } catch (err) {
+            if ((err as Error).name !== 'AbortError') {
+                console.error('Share error:', err);
+            }
+        }
+    };
 
     return (
         <main className="min-h-screen bg-black text-white selection:bg-amber-500 selection:text-black">
@@ -100,7 +119,10 @@ export default async function ScientistDetailPage({ params }: DetailProps) {
                     <div className="pt-20 pb-10 border-t border-white/10 text-center">
                         <p className="text-gray-500 text-sm mb-4">Bu hikaye size ilham verdi mi?</p>
                         <div className="flex justify-center gap-4">
-                            <button className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors">
+                            <button
+                                onClick={handleShare}
+                                className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all active:scale-95"
+                            >
                                 <Share2 size={18} /> Paylaş
                             </button>
                         </div>
