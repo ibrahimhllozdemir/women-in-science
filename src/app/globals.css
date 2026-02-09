@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  /* Enforce Dark Theme base */
+  --background: #050505;
+  --foreground: #ededed;
+
+  /* Accent Colors */
+  --primary: #fbbf24;
+  /* Amber-400 equivalent for gold accents */
+  --secondary: #6366f1;
+  /* Indigo-500 for tech feel */
+  --muted: #a3a3a3;
+
+  /* Font Variables */
+  --font-inter: var(--font-inter);
+  --font-playfair: var(--font-playfair);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for "Museum" Feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Utility for smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide Scrollbar Utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
