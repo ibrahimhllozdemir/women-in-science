@@ -2,7 +2,7 @@
 import { streamText } from 'ai';
 import { google } from '@ai-sdk/google';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // Handle CORS preflight requests
 export async function OPTIONS() {
